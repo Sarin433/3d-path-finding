@@ -8,7 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet
+- **2D to 3D CETSP Converter** (`src/cetsp/convert_to_3d.py`)
+  - Convert standard 2D CETSP benchmark files to 3D format
+  - Multiple z-coordinate generation strategies: `wave`, `random`, `dome`, `layers`, `distance`
+  - Single file and batch conversion support
+  - CLI interface for command-line usage
+  - Comprehensive test suite (21 tests)
+
+- **CETSP Benchmark Datasets** - Added 46 standard CETSP benchmark instances from literature
+  - Located in `data/CETSP/Dataset/`
+  - Includes 65 known solutions for comparison
+
+### Changed
+- Updated solver count to 16 variants across 7 algorithm families
+- Added Simulated Annealing family: `SimulatedAnnealingCETSP`, `AdaptiveSimulatedAnnealingCETSP`, `ThresholdAcceptingCETSP`
+- Added Grey Wolf family: `GreyWolfCETSP`, `EnhancedGreyWolfCETSP`
+
+### Fixed
+- Fixed all linting issues across codebase (ruff check)
+- Fixed all formatting issues (ruff format)
+- Updated type hints to use modern Python 3.10+ syntax (`list` instead of `List`, `X | None` instead of `Optional[X]`)
 
 ## [0.1.0] - 2026-02-05
 
