@@ -1,16 +1,16 @@
 """CETSP Solvers module."""
 
-from .base import CETSPSolver
-from .greedy import GreedyCETSP
-from .insertion import InsertionCETSP
-from .astar import AStarCETSP, CETSPState
-from .two_opt import TwoOptCETSP
-from .genetic import GeneticCETSP, AdaptiveGeneticCETSP, Individual
-from .aco import AntColonyCETSP, MaxMinAntSystem, AntColonySystemCETSP
+from .aco import AntColonyCETSP, AntColonySystemCETSP, MaxMinAntSystem
 from .aha import ArtificialHummingbirdCETSP, EnhancedAHACETSP
-from .pso import ParticleSwarmCETSP, AdaptivePSOCETSP, DiscretePSOCETSP
-from .gwo import GreyWolfCETSP, EnhancedGreyWolfCETSP
-from .sa import SimulatedAnnealingCETSP, AdaptiveSimulatedAnnealingCETSP, ThresholdAcceptingCETSP
+from .astar import AStarCETSP, CETSPState
+from .base import CETSPSolver
+from .genetic import AdaptiveGeneticCETSP, GeneticCETSP, Individual
+from .greedy import GreedyCETSP
+from .gwo import EnhancedGreyWolfCETSP, GreyWolfCETSP
+from .insertion import InsertionCETSP
+from .pso import AdaptivePSOCETSP, DiscretePSOCETSP, ParticleSwarmCETSP
+from .sa import AdaptiveSimulatedAnnealingCETSP, SimulatedAnnealingCETSP, ThresholdAcceptingCETSP
+from .two_opt import TwoOptCETSP
 
 __all__ = [
     "CETSPSolver",

@@ -322,7 +322,8 @@ class TestIntegration:
 
         # Should have 10 data lines (excluding comments)
         data_lines = [
-            line for line in output_content.split("\n")
+            line
+            for line in output_content.split("\n")
             if line.strip() and not line.startswith("//")
         ]
         assert len(data_lines) == 10

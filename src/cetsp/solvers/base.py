@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 
 class CETSPSolver(ABC):
     """Abstract base class for CETSP solvers."""
-    
-    def __init__(self, problem: "CETSP"):
+
+    def __init__(self, problem: CETSP):
         self.problem = problem
-    
+
     @abstractmethod
-    def solve(self) -> "CETSPSolution":
+    def solve(self) -> CETSPSolution:
         """Solve the CETSP and return solution."""
         pass

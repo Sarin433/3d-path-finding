@@ -2,7 +2,7 @@
 
 from .node import CETSPNode
 from .problem import CETSP, CETSPPath, CETSPSolution
-from .solvers import CETSPSolver, GreedyCETSP, InsertionCETSP, AStarCETSP, TwoOptCETSP
+from .solvers import AStarCETSP, CETSPSolver, GreedyCETSP, InsertionCETSP, TwoOptCETSP
 
 __all__ = [
     "CETSPNode",
