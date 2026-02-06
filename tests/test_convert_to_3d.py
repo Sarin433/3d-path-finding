@@ -1,15 +1,14 @@
 """Test cases for CETSP 2D to 3D converter."""
 
-import pytest
-import tempfile
-import os
 from pathlib import Path
 
+import pytest
+
 from src.cetsp.convert_to_3d import (
-    parse_2d_cetsp,
     add_z_coordinate,
-    convert_cetsp_to_3d,
     batch_convert,
+    convert_cetsp_to_3d,
+    parse_2d_cetsp,
 )
 
 
@@ -33,7 +32,7 @@ class TestParse2DCETSP:
         assert nodes[0] == (50.0, 55.0, 10.0)  # x, y, radius
         assert nodes[1] == (60.0, 70.0, 8.0)
         assert nodes[2] == (30.0, 40.0, 12.0)
-        assert len(metadata['comments']) == 2
+        assert len(metadata["comments"]) == 2
 
     def test_parse_empty_file(self, tmp_path):
         """Test parsing an empty file."""
@@ -55,7 +54,7 @@ class TestParse2DCETSP:
         nodes, metadata = parse_2d_cetsp(str(file_path))
 
         assert len(nodes) == 0
-        assert len(metadata['comments']) == 2
+        assert len(metadata["comments"]) == 2
 
     def test_parse_minimal_columns(self, tmp_path):
         """Test parsing file with minimal columns (x, y only)."""
@@ -87,24 +86,24 @@ class TestAddZCoordinate:
 
     def test_wave_strategy(self, sample_nodes):
         """Test wave z-coordinate strategy."""
-        result = add_z_coordinate(sample_nodes, strategy='wave', z_min=10, z_max=90)
+        result = add_z_coordinate(sample_nodes, strategy="wave", z_min=10, z_max=90)
 
         assert len(result) == 4
-        for x, y, z, radius in result:
+        for _x, _y, z, radius in result:
             assert 10 <= z <= 90
             assert radius > 0
 
     def test_random_strategy(self, sample_nodes):
         """Test random z-coordinate strategy."""
-        result = add_z_coordinate(sample_nodes, strategy='random', z_min=10, z_max=90, seed=42)
+        result = add_z_coordinate(sample_nodes, strategy="random", z_min=10, z_max=90, seed=42)
 
         assert len(result) == 4
-        for x, y, z, radius in result:
+        for _x, _y, z, _radius in result:
             assert 10 <= z <= 90
 
     def test_dome_strategy(self, sample_nodes):
         """Test dome z-coordinate strategy (center is highest)."""
-        result = add_z_coordinate(sample_nodes, strategy='dome', z_min=10, z_max=90)
+        result = add_z_coordinate(sample_nodes, strategy="dome", z_min=10, z_max=90)
 
         # Center node (50, 50) should have highest z
         z_values = {(r[0], r[1]): r[2] for r in result}
@@ -116,7 +115,7 @@ class TestAddZCoordinate:
 
     def test_layers_strategy(self, sample_nodes):
         """Test layers z-coordinate strategy."""
-        result = add_z_coordinate(sample_nodes, strategy='layers', z_min=10, z_max=90)
+        result = add_z_coordinate(sample_nodes, strategy="layers", z_min=10, z_max=90)
 
         assert len(result) == 4
         # Layers should create 3 distinct heights
@@ -126,7 +125,7 @@ class TestAddZCoordinate:
 
     def test_distance_strategy(self, sample_nodes):
         """Test distance-based z-coordinate strategy."""
-        result = add_z_coordinate(sample_nodes, strategy='distance', z_min=10, z_max=90)
+        result = add_z_coordinate(sample_nodes, strategy="distance", z_min=10, z_max=90)
 
         # Center should have lowest z (inverse of dome)
         z_values = {(r[0], r[1]): r[2] for r in result}
@@ -137,15 +136,15 @@ class TestAddZCoordinate:
 
     def test_seed_reproducibility(self, sample_nodes):
         """Test that same seed produces same results."""
-        result1 = add_z_coordinate(sample_nodes, strategy='random', seed=42)
-        result2 = add_z_coordinate(sample_nodes, strategy='random', seed=42)
+        result1 = add_z_coordinate(sample_nodes, strategy="random", seed=42)
+        result2 = add_z_coordinate(sample_nodes, strategy="random", seed=42)
 
         assert result1 == result2
 
     def test_different_seeds_different_results(self, sample_nodes):
         """Test that different seeds produce different results."""
-        result1 = add_z_coordinate(sample_nodes, strategy='random', seed=42)
-        result2 = add_z_coordinate(sample_nodes, strategy='random', seed=123)
+        result1 = add_z_coordinate(sample_nodes, strategy="random", seed=42)
+        result2 = add_z_coordinate(sample_nodes, strategy="random", seed=123)
 
         # Z values should differ
         z1 = [r[2] for r in result1]
@@ -200,15 +199,11 @@ class TestConvertCETSPTo3D:
         input_path = tmp_path / "test.cetsp"
         input_path.write_text(input_content)
 
-        strategies = ['wave', 'random', 'dome', 'layers', 'distance']
+        strategies = ["wave", "random", "dome", "layers", "distance"]
 
         for strategy in strategies:
             output_path = tmp_path / f"test_{strategy}_3d.cetsp"
-            result = convert_cetsp_to_3d(
-                str(input_path),
-                str(output_path),
-                strategy=strategy
-            )
+            result = convert_cetsp_to_3d(str(input_path), str(output_path), strategy=strategy)
             assert Path(result).exists()
 
     def test_custom_z_range(self, tmp_path):
@@ -219,12 +214,7 @@ class TestConvertCETSPTo3D:
         input_path.write_text(input_content)
 
         output_path = tmp_path / "output_3d.cetsp"
-        convert_cetsp_to_3d(
-            str(input_path),
-            str(output_path),
-            z_min=100,
-            z_max=200
-        )
+        convert_cetsp_to_3d(str(input_path), str(output_path), z_min=100, z_max=200)
 
         content = output_path.read_text()
         # Verify z range is documented
@@ -291,7 +281,7 @@ class TestBatchConvert:
 
         (input_dir / "test.cetsp").write_text("50 50 0 10 12\n60 60 0 8 15")
 
-        output_files = batch_convert(str(input_dir), strategy='dome')
+        output_files = batch_convert(str(input_dir), strategy="dome")
 
         assert len(output_files) == 1
         content = Path(output_files[0]).read_text()
@@ -323,12 +313,7 @@ class TestIntegration:
 
         output_path = tmp_path / "bubbles_test_3d.cetsp"
         result = convert_cetsp_to_3d(
-            str(input_path),
-            str(output_path),
-            strategy='wave',
-            z_min=10,
-            z_max=90,
-            depot_z=50
+            str(input_path), str(output_path), strategy="wave", z_min=10, z_max=90, depot_z=50
         )
 
         # Verify output
@@ -336,8 +321,10 @@ class TestIntegration:
         output_content = output_path.read_text()
 
         # Should have 10 data lines (excluding comments)
-        data_lines = [l for l in output_content.split('\n')
-                      if l.strip() and not l.startswith('//')]
+        data_lines = [
+            line for line in output_content.split("\n")
+            if line.strip() and not line.startswith("//")
+        ]
         assert len(data_lines) == 10
 
         # Each line should have 4 values
