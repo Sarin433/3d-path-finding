@@ -144,6 +144,44 @@ cetsp.visualize(solution, method='plotly')  # Interactive HTML
 cetsp.visualize(solution, method='matplotlib')  # Static PNG
 ```
 
+### Converting 2D Datasets to 3D
+
+Convert standard CETSP benchmark files to 3D format:
+
+```python
+from src.cetsp.convert_to_3d import convert_cetsp_to_3d, batch_convert
+
+# Single file conversion
+convert_cetsp_to_3d(
+    "data/CETSP/Dataset/bubbles1.cetsp",
+    "data/bubbles1_3d.cetsp",
+    strategy='wave',  # wave, random, dome, layers, distance
+    z_min=10,
+    z_max=90
+)
+
+# Batch convert all files in a directory
+batch_convert("data/CETSP/Dataset", "data/CETSP_3D", strategy='dome')
+```
+
+**Z-Coordinate Strategies:**
+| Strategy | Description |
+|----------|-------------|
+| `wave` | Sinusoidal wave based on x/y position |
+| `random` | Random z values within range |
+| `dome` | Higher z in center, lower at edges |
+| `layers` | Alternating layer heights |
+| `distance` | Z based on distance from center |
+
+**CLI Usage:**
+```bash
+# Single file
+python src/cetsp/convert_to_3d.py data/CETSP/Dataset/bubbles1.cetsp -s wave
+
+# Batch convert directory
+python src/cetsp/convert_to_3d.py data/CETSP/Dataset --batch -o data/CETSP_3D
+```
+
 ---
 
 ## 📚 All Available Solvers
@@ -198,6 +236,7 @@ cetsp/
 │       ├── __init__.py      # Package exports
 │       ├── node.py          # CETSPNode class
 │       ├── problem.py       # CETSP, CETSPPath, CETSPSolution
+│       ├── convert_to_3d.py # 2D to 3D converter
 │       └── solvers/
 │           ├── __init__.py
 │           ├── base.py      # Base solver class
@@ -211,8 +250,12 @@ cetsp/
 │           ├── aha.py       # Artificial hummingbird
 │           ├── gwo.py       # Grey wolf optimization
 │           └── sa.py        # Simulated annealing
+├── data/
+│   └── CETSP/               # Benchmark datasets
+│       └── Dataset/         # 46 standard 2D instances
 ├── tests/
-│   └── test_cetsp.py        # Comprehensive tests
+│   ├── test_cetsp.py        # Core tests
+│   └── test_convert_to_3d.py # Converter tests
 ├── examples/
 │   ├── cetsp_example.py
 │   ├── cetsp_benchmark_table.py
