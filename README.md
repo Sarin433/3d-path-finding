@@ -51,7 +51,7 @@ The **Close-Enough Travelling Salesman Problem (CETSP)** is a variant of the cla
 ### Using uv (recommended)
 
 ```bash
-git clone https://github.com/yourusername/cetsp.git
+git clone https://github.com/Sarin433/3d-path-finding.git
 cd cetsp
 uv sync
 ```
@@ -59,7 +59,7 @@ uv sync
 ### Using pip
 
 ```bash
-git clone https://github.com/yourusername/cetsp.git
+git clone https://github.com/Sarin433/3d-path-finding.git
 cd cetsp
 pip install -e .
 ```
