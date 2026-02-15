@@ -1,5 +1,7 @@
 """Ant Colony Optimization (ACO) solver for CETSP."""
 
+from __future__ import annotations
+
 import random
 import time
 from dataclasses import dataclass, field

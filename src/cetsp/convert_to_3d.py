@@ -13,6 +13,8 @@ Output format (3D CETSP):
     x y z radius
 """
 
+from __future__ import annotations
+
 import os
 from pathlib import Path
 from typing import Literal

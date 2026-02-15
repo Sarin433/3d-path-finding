@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A comprehensive Python library for solving Close-Enough Travelling Salesman Problem (CETSP) in 3D space with multiple metaheuristic algorithms"
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.14"
+requires-python = ">=3.12,<4"
 authors = [
     {name = "Your Name", email = "your.email@example.com"}
 ]

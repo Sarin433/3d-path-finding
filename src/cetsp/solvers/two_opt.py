@@ -1,5 +1,7 @@
 """2-opt improvement for CETSP solutions."""
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..problem import CETSP, CETSPPath, CETSPSolution

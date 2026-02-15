@@ -16,6 +16,8 @@ Reference:
     Optimization by Simulated Annealing. Science, 220(4598), 671-680.
 """
 
+from __future__ import annotations
+
 import math
 import random
 import time

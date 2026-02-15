@@ -20,6 +20,8 @@ Reference:
     Grey Wolf Optimizer. Advances in Engineering Software, 69, 46-61.
 """
 
+from __future__ import annotations
+
 import math
 import random
 import time

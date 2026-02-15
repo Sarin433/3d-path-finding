@@ -1,5 +1,7 @@
 """CETSP Solvers module."""
 
+from __future__ import annotations
+
 from .aco import AntColonyCETSP, AntColonySystemCETSP, MaxMinAntSystem
 from .aha import ArtificialHummingbirdCETSP, EnhancedAHACETSP
 from .astar import AStarCETSP, CETSPState
